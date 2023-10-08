@@ -1,5 +1,6 @@
 // omp_atomic.cpp
-// compile with: /openmp
+// compile with: gcc opm_atomic.cpp -fopenmp
+// Specifies that a memory location that will be updated atomically.
 #include <stdio.h>
 #include <omp.h>
 
@@ -12,5 +13,5 @@ int main() {
       #pragma omp atomic
       count++;
    }
-   printf_s("Number of threads: %d\n", count);
+   printf("Number of threads: %d\n", count);
 }
