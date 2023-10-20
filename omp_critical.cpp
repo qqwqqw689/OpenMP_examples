@@ -1,6 +1,6 @@
 // omp_critical.cpp
 // Specifies that code is only be executed on one thread at a time.
-// compile with: compile with: gcc opm_atomic.cpp -fopenmp
+// compile with: gcc opm_atomic.cpp -fopenmp
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
