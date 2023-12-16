@@ -31,6 +31,8 @@ int main() {
       #pragma omp section
       {
          printf("Thread %d: ", omp_get_thread_num( ));
+         // The omp_get_thread_num routine returns the thread number,
+         // within the current team, of the calling thread
          read(&data);
          #pragma omp flush(data)
          flag = 1;
