@@ -26,15 +26,32 @@ int main( )
         bSucceed = 1;
 
     omp_set_num_threads(NUM_THREADS);
+    // omp_set_num_threads routine affects the number of threads 
+    // to be used for subsequent parallel regions that do not 
+    // specify a num_threads clause
 
+    // #pragma omp parallel
+    // The omp parallel directive explicitly instructs
+    // the compiler to parallelize the chosen block of code.
+
+    // reduction([ reduction-modifier,]reduction-identifier : list)
+    // For each list item, a private copy is created in each implicit task or
+    // SIMD lane and is initialized with the initializer value of the reduction-identifier.
+    // After the end of the region, the original list item is updated with the values
+    // of the private copies using the combiner associated with the reduction-identifier.
+    // SIMD :  single instruction, multiple data
     #pragma omp parallel reduction(+ : nCount)
     {
         nCount += 1;
-
+        // The omp for directive instructs the compiler to distribute loop
+        // iterations within the team of threads that encounters this work-sharing construct.
         #pragma omp for reduction(+ : nSum)
         for (i = SUM_START ; i <= SUM_END ; ++i)
             nSum += i;
-
+        // The sections construct is a non-iterative worksharing construct that
+        // contains a set of structured blocks that are to be distributed among
+        // and executed by the threads in a team. Each structured block is executed
+        // once by one of the threads in the team in the context of its implicit task.
         #pragma omp sections reduction(&& : bSucceed)
         {
             #pragma omp section
