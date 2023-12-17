@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <omp.h>
+#include <unistd.h>
 
 #define NUM_THREADS 4
 #define SLEEP_THREAD 1
@@ -71,10 +72,12 @@ int main() {
         for (i = 0 ; i < NUM_THREADS ; ++i) {
            for (j = 0 ; j < NUM_LOOPS ; ++j) {
               int nThread = omp_get_thread_num();
+              // The omp_get_thread_num function returns the number of
+              // the currently executing thread within the team. 
               assert(nThread < NUM_THREADS);
 
               if (nThread == SLEEP_THREAD)
-                  Sleep(100);
+                  sleep(3);
                 nSave[nThread][ThreadPrivate][j] = nThreadPrivate;
                 nSave[nThread][Private][j] = nPrivate;
                 nSave[nThread][Shared][j] = nShared;
