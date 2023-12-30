@@ -3,7 +3,7 @@
 
 int main()
 {
-    omp_set_num_threads(100);
+	omp_set_num_threads(100);
 	#pragma omp parallel for
 	for(int i=0; i < 100; i++)
 	{
