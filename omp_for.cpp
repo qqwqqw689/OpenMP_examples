@@ -24,11 +24,21 @@ int main() {
    omp_set_num_threads(NUM_THREADS);
 
    // default
-   // Specifies the behavior of unscoped variables in a parallel region.
+   // sets the data-sharing policy to apply to variables that have not
+   // been explicitly assigned one
+   // none: no policy will be applied by default
+
+   // private
+   // variables that each thread in the OpenMP parallel region will have a copy of. 
+
+   // shared
+   // variables shared across the threads belonging to the OpenMP parallel region concerned.
    #pragma omp parallel default(none) private(i) shared(nSum, nThreads, nStart, nEnd)
    {
       #pragma omp master
       nThreads = omp_get_num_threads();
+      // The omp master directive identifies a section of code that
+      // must be run only by the master thread.
 
       #pragma omp for
       for (i=nStart; i<=nEnd; ++i) {
