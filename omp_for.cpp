@@ -18,10 +18,14 @@ int main() {
 
    if (nTmp < 0)
       nSumCalc = -nSumCalc;
-   //  omp_set_num_threads 
+   // omp_set_num_threads 
    // routine affects the number of threads to be used for
    // subsequent parallel regions that do not specify a num_threads clause
    omp_set_num_threads(NUM_THREADS);
+
+   // #pragma omp parallel directive in OpenMP is used to create a parallel region 
+   // Within a parallel region, OpenMP creates multiple threads (processes)
+   // to execute the code concurrently.
 
    // default
    // sets the data-sharing policy to apply to variables that have not
@@ -40,8 +44,10 @@ int main() {
       // The omp master directive identifies a section of code that
       // must be run only by the master thread.
 
+      // OpenMP distribute the iterations of the loop across multiple threads
       #pragma omp for
       for (i=nStart; i<=nEnd; ++i) {
+            // the code following this directive should be treated as an atomic operation.
             #pragma omp atomic
             nSum += i;
       }
